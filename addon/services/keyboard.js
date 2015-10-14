@@ -27,8 +27,32 @@ export default Service.extend({
       return `${names} ${name}.ember-keyboard-listener`;
     }, '');
 
+    if (window.Worker) {
+      // this.set('keyWorker', new Worker('assets/workers/handle-key-event.js'));
+    }
+
     Ember.$(document).on(eventNames, null, (event) => {
-      handleKeyEvent(event, this.get('responderStack'));
+      const { keyWorker, responderStack } = this.getProperties('keyWorker', 'responderStack');
+
+      if (keyWorker) {
+        const listeners = {};
+        responderStack.forEach((responder) => {
+          listeners[responder.elementId] = Ember.listenersFor(responder);
+        });
+        keyWorker.postMessage(JSON.stringify({ event, listeners }));
+      } else {
+        handleKeyEvent(event, this.get('responderStack'));
+      }
     });    
+  }),
+
+  _teardownListener: on('isDestroying', function() {
+    const keyWorker = this.get('keyWorker');
+
+    if (keyWorker) {
+      keyWorker.terminate();
+    }
+
+    Ember.$(document).off('.ember-keyboard-listener');
   })
 });
