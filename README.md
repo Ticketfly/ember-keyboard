@@ -40,7 +40,7 @@ anotherFunction: on('keyUp:ctrl+shift+a', function() {
 })
 ```
 
-The modifier keys include `ctrl`, `shift`, `alt`, and `meta`. For a full list of the primary keys (such as `a`, `1`, ` `, `Escape`, and `ArrowLeft`), look [here](https://github.com/Ticketfly/ember-keyboard/addon/fixtures/key-map.js).
+The modifier keys include `ctrl`, `shift`, `alt`, and `meta`. For a full list of the primary keys (such as `a`, `1`, ` `, `Escape`, and `ArrowLeft`), look [here](https://github.com/Ticketfly/ember-keyboard/blob/master/addon/fixtures/key-map.js).
 
 Finally, when you're ready for a component to leave the `eventStack` you can deactivate it:
 
@@ -49,6 +49,51 @@ deactivateKeyboard: on('willDestroyElement', function() {
   this.get('keyboard').deactivate(this);
 })
 ```
+
+## Options
+
+`ember-keyboard` will search its responders for optional attributes. These options provide greater control over `ember-keyboard`'s [event bubbling](#event-bubbling).
+
+### `keyboardPriority`
+
+By default, when you `activate` a component it gets added to the bottom of the `eventStack`. As more components get added, each will arrive at the bottom of the stack, where it will become the first responder. If you need more control over the `eventStack`'s organization, you can set the `keyboardPriority` of its responders. In this case:
+
+```js
+component1.set('keyboardPriority', 3);
+component2.set('keyboardPriority', 1);
+component4.set('keyboardPriority', 2);
+
+keyboard.activate(component1);
+keyboard.activate(component2);
+keyboard.activate(component3);
+keyboard.activate(component4);
+```
+
+The `eventStack`'s order will be `[component2, component4, component1, component3]`. Note that precedence is given to lower numbers, and all numbers are given precedence over `undefined`. 
+
+### `keyboardFirstResponder`
+
+Sometimes you'll want a component to temporarily become the first responder, regardless of its priority. For instance, a user might click or focusIn a low priority item. When that happens, you can temporarily give it first responder priority by:
+
+```js
+keyboard.activate(component);
+
+component.set('keyboardFirstPriority', true);
+```
+
+You can later `component.set('keyboardFirstResponder', false)` and the component will automatically return to its original priority. Additionally, if you set another component to `keyboardFirstResponder`, the previous `keyboardFirstResponder` will return to its old priority.
+
+### `keyboardBubbles`
+
+By default, events will bubble up the `eventStack`. However, if you want to stop an event from bubbling after a particular component, you can do so by:
+
+```js
+keyboard.activate(component);
+
+component.set('keyboardBubbles', false);
+```
+
+This is especially useful with modals, as it'll prevent interaction with the rest of your app. If there are components you still want to respond to events, make sure their priority is higher than the priority of the component that stops bubbling.
 
 ## Concepts & Advanced Usage
 

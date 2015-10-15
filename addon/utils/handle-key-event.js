@@ -43,10 +43,15 @@ export default function handleKeyEvent(event, responderStack) {
 
   // Finds the first responder with a registered listener for one of the variants
   const responder = responderStack.find((responder) => {
-    return triggeredVariant = variants.find((variant) => hasListeners(responder, variant));
+    triggeredVariant = variants.find((variant) => hasListeners(responder, variant));
+
+    // Short-circuit the find if the responder is `keyboardBubbles: false`
+    if (triggeredVariant || responder.get('keyboardBubbles') === false) {
+      return true;
+    }
   });
 
-  if (responder) {
+  if (responder && triggeredVariant) {
     responder.trigger(triggeredVariant);
   }
 }

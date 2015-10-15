@@ -9,6 +9,7 @@ const {
 export default Component.extend({
   classNames: ['modal'],
   keyboard: inject.service(),
+  keyboardBubbles: false,
 
   activateKeyboard: on('didInsertElement', function() {
     this.get('keyboard').activate(this);
