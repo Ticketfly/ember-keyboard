@@ -31,11 +31,15 @@ activateKeyboard: on('didInsertElement', function() {
 This will place the component at the bottom of the `eventStack`, meaning that it will be the first component to respond to a key event. Let's say you want your component to respond to the key `a` as well as `ctrl+shift+a`:
 
 ```js
-aFunction: on('keyUp:a', function() {
+import { keyUp } from 'ember-keyboard';
+
+. . . .
+
+aFunction: keyUp('a', function() {
   console.log('`a` was pressed');
 }),
 
-anotherFunction: on('keyUp:ctrl+shift+a', function() {
+anotherFunction: keyUp('ctrl+shift+a', function() {
   console.log('`ctrl+shift+a` was pressed');
 })
 ```
@@ -107,4 +111,8 @@ Now let's say your `modal-dialog` component pops up. It also responds to `ArrowL
 
 ### `keyUp` and `keyDown`
 
-From a UI perspective, you'll usually want to register your listeners with `keyUp`. However, there are special scenarios where `keyDown` might be more desirable, usually because it fires repeatedly while the key is held. This could allow users to rapidly cycle through modal states with `keyDown:ArrowRight` or scroll through a custom window pane with `keyDown:ArrowDown`.
+From a UI perspective, you'll usually want to register your listeners with `keyUp`. However, there are special scenarios where `keyDown` might be more desirable, usually because it fires repeatedly while the key is held. This could allow users to rapidly cycle through modal states or scroll through a custom window pane. You can import either `keyUp` or `keyDown` from `ember-keyboard`:
+
+```js
+import { keyDown, keyUp } from 'ember-keyboard';
+```

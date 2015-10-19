@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { keyUp } from 'ember-keyboard';
 
 const {
   Component,
@@ -19,7 +20,7 @@ export default Component.extend({
     this.get('keyboard').deactivate(this);
   }),
 
-  closeModal: on('keyUp:Escape', function() {
+  closeModal: keyUp('Escape', function() {
     this.attrs.closeModal();
   })
 });
