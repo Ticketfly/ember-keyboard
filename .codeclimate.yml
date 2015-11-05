@@ -1,0 +1,7 @@
+languages:
+  JavaScript: true
+exclude_paths:
+- "app/mirage/**/*"
+- "config/*"
+- "tests/**/*"
+- "vendor/**/*"
