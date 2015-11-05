@@ -33,3 +33,4 @@ install:
 
 script:
   - ember try $EMBER_TRY_SCENARIO test
+  - CODECLIMATE_REPO_TOKEN=9f68362490948225c24c01321dfc7cb37cff1c397c492702ef174fe69c433e77 codeclimate-test-reporter < lcov.info

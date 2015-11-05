@@ -1,6 +1,8 @@
 # Ember-keyboard
 
 [![Build Status](https://travis-ci.org/Ticketfly/ember-keyboard.svg?branch=master)](https://travis-ci.org/Ticketfly/ember-keyboard)
+[![Code Climate](https://codeclimate.com/repos/563b83436956801248000005/badges/18e904b0594e65b152c9/gpa.svg)](https://codeclimate.com/repos/563b83436956801248000005/feed)
+[![Test Coverage](https://codeclimate.com/repos/563b83436956801248000005/badges/18e904b0594e65b152c9/coverage.svg)](https://codeclimate.com/repos/563b83436956801248000005/coverage)
 
 `ember-keyboard`, an Ember addon for the painless support of keyboard events.
 
