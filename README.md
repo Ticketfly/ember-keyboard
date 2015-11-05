@@ -1,5 +1,7 @@
 # Ember-keyboard
 
+[![Build Status](https://travis-ci.org/Ticketfly/ember-keyboard.svg?branch=master)](https://travis-ci.org/Ticketfly/ember-keyboard)
+
 `ember-keyboard`, an Ember addon for the painless support of keyboard events.
 
 ## Features
